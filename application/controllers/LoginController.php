@@ -30,11 +30,13 @@ class LoginController extends CI_Controller {
         
 
         $this->checkAsPost();
-        //dbCalling();
         
         $this->load->helper('url');
+
+        $this->load->model('loginDbChecker');
+        $this->loginDbChecker->authentificate($this->username,$this->password,$this->username_err,$this->password_err);
         $data = array('username' => $this->username, 'username_err' => $this->username_err,'password_err' => $this->password_err,'password' => $this->password);
-        $this->load->view('login',$data);
+        $this->load->view('login_view',$data);
     }
 
     private function checkAsPost(){
