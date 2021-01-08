@@ -100,7 +100,8 @@ class RegisterController extends CI_Controller{
 			// Close connection
 			mysqli_close($link);
 		}
-		$this->load->view('register', $username);
+		$data = array('username' => $this->username, 'username_err' => $this->username_err,'password_err' => $this->password_err,'password' => $this->password, 'confirm_password' => $this->confirm_password, 'confirm_password_err' => $this->confirm_password_err);
+		$this->load->view('register_view', $data);
 
 	}
 }?>
