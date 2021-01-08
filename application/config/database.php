@@ -74,12 +74,12 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
+	'dsn'	=> 'mysql:host=localhost; dbname=20INF2PJ_TD21G4; charset=utf8;',
+	'hostname' => 'localhost:3307',
+	'username' => 'i190071',
+	'password' => 'qkx15da',
 	'database' => '',
-	'dbdriver' => 'mysqli',
+	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),

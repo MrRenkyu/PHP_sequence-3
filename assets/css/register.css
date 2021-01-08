@@ -1,0 +1,39 @@
+
+body{ 
+    
+    font: 14px sans-serif;
+    
+}
+.background-image{
+    position : absolute;
+    top:0; left:0;
+    
+    width: 100vw;
+    
+    filter: blur(5px);
+}
+.wrapper{
+
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    
+     width: 350px; 
+    padding: 20px; 
+    
+    background-color: #A3F08E;
+    border-radius: 25px;
+}
+
+.btn-not-connected{
+    width: 160px;
+    background-color: #18CA43;
+    color: white;
+}
+
+.btn-not-connected:hover{
+    width: 160px;
+    background-color: #12AB37;
+    color: white;
+
+}
