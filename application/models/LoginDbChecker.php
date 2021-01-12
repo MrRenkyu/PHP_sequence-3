@@ -8,22 +8,21 @@ class LoginDbChecker extends CI_Model{
 
     public function authentificate($username,$password,$tamp_username_err,$tamp_password_err){
        
-        $username = "zozor";
+        echo 'authentificate method: '.$username.'  '.$password;
         if(empty($tamp_username_err) && empty($tamp_password_err)){          
             // Prepare a select statement
             $query = $this->db->query("SELECT id, username, password FROM USER WHERE username = '$username'");
-            foreach ($query->getResult('array') as $line) {
-                $hashed_password = $line['password'];
+            foreach ($query->result() as $line) {
+                $hashed_password = $line->password;
                 if(password_verify($password, $hashed_password)){
                     // Password is correct, so start a new session
-                    session_start();
                     
                     // Store data in session variables
                     $_SESSION["loggedin"] = true;
-                    $_SESSION["id"] = $line['id'];
+                    $_SESSION["id"] = $line->id;
                     $_SESSION["username"] = $username;                            
                     
-                    succesfullConnect_NextPage();
+                    return true;
                 } else{
                     // Display an error message if password is not valid
                     $tamp_password_err = "Le mot de passe rentré est mauvais.";
@@ -31,6 +30,7 @@ class LoginDbChecker extends CI_Model{
             }
         }
        $this->postErrors($tamp_username_err,$tamp_password_err);
+       return false;
     }
 
     function postErrors($tamp_username_err,$tamp_password_err){

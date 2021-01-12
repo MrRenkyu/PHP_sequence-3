@@ -24,7 +24,7 @@ class LoginController extends CI_Controller {
 
         // Check if the user is already logged in, if yes then redirect him to home page
         if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-            succesfullConnect_NextPage();
+            $this->succesfullConnect_NextPage();
             exit;
         }
         
@@ -34,7 +34,10 @@ class LoginController extends CI_Controller {
         $this->load->helper('url');
 
         $this->load->model('loginDbChecker');
-        $this->loginDbChecker->authentificate($this->username,$this->password,$this->username_err,$this->password_err);
+       
+        if( $this->loginDbChecker->authentificate($this->username,$this->password,$this->username_err,$this->password_err)){
+            $this->succesfullConnect_NextPage();
+        }
         $data = array('username' => $this->username, 'username_err' => $this->username_err,'password_err' => $this->password_err,'password' => $this->password);
         $this->load->view('login_view',$data);
     }
@@ -58,48 +61,8 @@ class LoginController extends CI_Controller {
             }  
         }      
     }
-    
-     function dbCalling(){
-        global $username_err,$password_err,$username,$password;
-         // Include config file
-         include ("model/config.php");
-         $db = new PDO("$server:host=$host;dbname=$base",$user,$pass);
-            // Validate credentials
-            if(empty($username_err) && empty($password_err)){          
-                // Prepare a select statement
-                $stmt = $db->prepare("SELECT id, username, password FROM USER WHERE username = $username");
-                $stmt->execute();
-                foreach ($db->query("SELECT id, username, password FROM USER WHERE username = '$username'") as $line) {
-                           $hashed_password = $line['password'];
-                                if(password_verify($password, $hashed_password)){
-                                    // Password is correct, so start a new session
-                                    session_start();
-                                    
-                                    // Store data in session variables
-                                    $_SESSION["loggedin"] = true;
-                                    $_SESSION["id"] = $line['id'];
-                                    $_SESSION["username"] = $username;                            
-                                    
-                                   succesfullConnect_NextPage();
-                                } else{
-                                    // Display an error message if password is not valid
-                                    $password_err = "Le mot de passe rentré est mauvais.";
-                                }
-                    }
-            }
-            postErrors();
-    }
 
-    
-
-
-    function postErrors(){
-        global $username_err,$password_err;
-        $_SESSION['usernameError'] = $username_err;
-        $_SESSION['passwordError'] = $password_err;
-    }
-
-    function succesfullConnect_NextPage(){                         
+    private function succesfullConnect_NextPage(){                         
         header("location: index.php/homeController/index");
     }
 
