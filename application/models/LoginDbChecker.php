@@ -2,14 +2,16 @@
 
 class LoginDbChecker extends CI_Model{
 
+    private $password_err,$username_err;
+
+
     public function __construct(){
        $this->load->database();
     }
 
-    public function authentificate($username,$password,$tamp_username_err,$tamp_password_err){
+    public function authentificate($username,$password){
        
-        echo 'authentificate method: '.$username.'  '.$password;
-        if(empty($tamp_username_err) && empty($tamp_password_err)){          
+        echo 'authentificate method: '.$username.'  '.$password;      
             // Prepare a select statement
             $query = $this->db->query("SELECT id, username, password FROM USER WHERE username = '$username'");
             foreach ($query->result() as $line) {
@@ -25,17 +27,19 @@ class LoginDbChecker extends CI_Model{
                     return true;
                 } else{
                     // Display an error message if password is not valid
-                    $tamp_password_err = "Le mot de passe rentré est mauvais.";
+                    $this->password_err = "Le mot de passe rentré est mauvais.";
                 }
             }
-        }
-       $this->postErrors($tamp_username_err,$tamp_password_err);
        return false;
     }
+    
 
-    function postErrors($tamp_username_err,$tamp_password_err){
-        $_SESSION['usernameError'] = $tamp_username_err;
-        $_SESSION['passwordError'] = $tamp_password_err;
+    public function getNewPassword_err(){
+        return $this->password_err;
+    }
+
+    public function getNewUsername_err(){
+        return $this->username_err;
     }
 }
 

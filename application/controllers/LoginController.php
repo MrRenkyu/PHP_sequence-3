@@ -11,21 +11,13 @@ class LoginController extends CI_Controller {
     
     public function index(){
         
-        
-        if(isset($_SESSION['usernameError'])){
-            $username_err = $_SESSION['usernameError'];
-        }
-        if(isset($_SESSION['passwordError'])){
-            $password_err = $_SESSION['passwordError'];
-        }
-        
-
         session_start();
 
         // Check if the user is already logged in, if yes then redirect him to home page
         if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-            $this->succesfullConnect_NextPage();
-            exit;
+           $this->succesfullConnect_NextPage();
+           echo"CONNECTED!";
+            //exit;
         }
         
 
@@ -35,9 +27,15 @@ class LoginController extends CI_Controller {
 
         $this->load->model('loginDbChecker');
        
-        if( $this->loginDbChecker->authentificate($this->username,$this->password,$this->username_err,$this->password_err)){
-            $this->succesfullConnect_NextPage();
+        if(!empty($username) && !empty($password)){
+            if( $this->loginDbChecker->authentificate($this->username,$this->password)){
+                $this->succesfullConnect_NextPage();
+            }else{
+                $this->username_err = $this->loginDbChecker->getNewUsername_err();
+                $this->password_err = $this->loginDbChecker->getNewPassword_err();
+            }
         }
+
         $data = array('username' => $this->username, 'username_err' => $this->username_err,'password_err' => $this->password_err,'password' => $this->password);
         $this->load->view('login_view',$data);
     }
@@ -63,7 +61,7 @@ class LoginController extends CI_Controller {
     }
 
     private function succesfullConnect_NextPage(){                         
-        header("location: index.php/homeController/index");
+       // header(base_url('index.php/HomeController/index'));
     }
 
 }
