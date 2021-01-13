@@ -9,8 +9,9 @@ class Article {
     protected $summary;
     protected $content;
     protected $id;
+
     
-    public function Article($isPublic, $author, $title, $publicationDate, $summary, $content, $id,$isFromBDD = false){
+    public function __construct($isPublic, $author, $title, $publicationDate, $summary, $content, $id,$isFromBDD = false){
         if ($isFromBDD) {
         $this->isPublic = $isPublic;
         $this->author = base64_decode($author);
@@ -30,6 +31,7 @@ class Article {
         }
        
     }
+    
    
     public function getId(){
         return $this->id;

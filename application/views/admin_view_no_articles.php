@@ -6,18 +6,9 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/Admin.css');?>">
      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>
-        function getArticle(idArticle){
-            jQuery.ajax({
-              url: "model/admin_manager.php",
-              type: "POST",
-              data: ({id: idArticle, action: "getArticle"}),
-            success: function(data){
-                document.location.reload();
-            }
-            });
-        }
-
-        function doAction(actionToDo){
+         function add(){
+            console.log("<?php echo base_url('index.php/AdminController/addArticle');?>");
+            console.log("add method js");
             var textTitle = document.getElementById('textTitle');
             var textSummary = document.getElementById('textSummary');
             var textContent = document.getElementById('textContent');
@@ -29,14 +20,14 @@
                pub = 1;
             }
             jQuery.ajax({
-              url: "model/admin_manager.php",
+              url: "<?php echo base_url('index.php/AdminController/addArticle');?>",
               type: "POST",
-              data: ({action: actionToDo, title: textTitle.value,
+              data: ({title: textTitle.value,
               summary: textSummary.value, content: textContent.value,
               author: textAuthor.value,
               date: textDate.value, public: pub}),
             success: function(data){
-                document.location.reload();
+               window.location.href = "<?php echo base_url('index.php/AdminController/index');?>"
             }
             });
         }
@@ -61,7 +52,7 @@
       </div>
       <div class="item GaucheBas">
           <?php 
-               $articles_proposal;
+               echo $articles_proposal;
            ?>
       </div>
 
@@ -89,7 +80,7 @@
           <input type="checkbox" id="checkboxPublic" name="checkboxPublic" ></input>
           <label for="checkboxPublic">Publique </label>
 
-          <button type="submit" name="insert" value="insert" onclick="doAction('addArticle')">Ajouter</button>
+          <button type="submit" name="insert" value="insert" onclick="add()">Ajouter</button>
       </div>
 
       <div class="item Footer">Fait par Thibault Derouin, Romain Molle, Enzo Levillain</div>

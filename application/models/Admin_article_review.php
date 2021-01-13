@@ -10,54 +10,57 @@ class Admin_article_review extends CI_Model{
 
 	public function __construct(){
 		$this->load->database();
-		session_start();
 		$this->load->model('articles_db_manager');
-		$this->load->library("article.php");
  
-		$listArticle = $this->articles_db_manager->GetAllArticle();
-
-		if(isset($_SESSION['idArticle'])){
-			$articleSelected = $this->articles_db_manager->GetArticleById($_SESSION['idArticle']);
-		}
+		$this->listArticle = $this->articles_db_manager->GetAllArticle();
+		
      }
    
 
-    function ShowTitle(){
-    	if(isset($_SESSION['idArticle'])){
-    	 	echo $this->articleSelected->getTitle();
-    	}
+    function ShowTitle($id){
+    	return $this->getArticleById($id)->getTitle();
     }
 
-	function ShowSummary(){
-    	if(isset($_SESSION['idArticle'])){
-    	 	echo $this->articleSelected->getSummary();
-    	}
+	function ShowSummary($id){
+    	return $this->getArticleById($id)->getSummary();
     }
 
-    function ShowContent(){
-    	if(isset($_SESSION['idArticle'])){
-    	 	echo $this->articleSelected->getContent();
-    	}
+    function ShowContent($id){
+    	return $this->getArticleById($id)->getContent();
     }
 
-    function ShowAuthor(){
-    	if(isset($_SESSION['idArticle'])){
-    	 	echo $this->articleSelected->getAuthor();
-    	}
+    function ShowAuthor($id){
+    	return $this->getArticleById($id)->getAuthor();
     }
 
-    function ShowPublicationDate(){
-    	if(isset($_SESSION['idArticle'])){
-    	 	echo $this->articleSelected->getPublicationDate();
-    	}
+    function ShowPublicationDate($id){
+    	return $this->getArticleById($id)->getPublicationDate();
     }
 
-    function IsPublic(){
-    	if(isset($_SESSION['idArticle'])){
-    		if($this->articleSelected->isPublic())
-    			echo 'checked';
-    	}
-    }
+    function IsPublic($id){
+    	if($this->getArticleById($id)->isPublic()){
+			return true;
+		}
+		return false;
+	}
+	
+	private function getArticleById($id){
+		return $this->articles_db_manager->GetArticleById($id);
+	}
+	function dataArrayPackageArticle($id){
+		$article = $this->getArticleById($id);
+		$data = array(
+			'title'=>$article->getTitle(),
+			'summary'=>$article->getSummary(),
+			'content'=>$article->getContent(),
+			'author'=>$article->getAuthor(),
+			'date'=>$article->getPublicationDate(),
+			'isPublic'=>$article->isPublic(),
+			'id'=>$article->getId()
+		);
+		return $data;
+
+	}
     
 	function displayProposalArticle(){
 		$StringHref="";
@@ -65,10 +68,10 @@ class Admin_article_review extends CI_Model{
 		 foreach($this->listArticle as $article){
 			//$StringHref += ' <button type="submit" name="insert" value="insert" onclick="getArticle('.$article->getId().')">'.htmlspecialchars($article->getTitle()).'</button>';
 			$stringURL = base_url('index.php/AdminController/displayArticlesData/'.$article->getId());
-			$StringHref .= '<a href='.$stringURL.'>Retour à la page d\'accueil</a>';
+			$stringText = htmlspecialchars($article->getTitle());
+			$StringHref .= '<a href='.$stringURL.'>'.$stringText.'</a>';
 			$StringHref .= '<p></p>';
 		}
-		echo"return of displayPoposal: ".$StringHref;
 		return $StringHref;
 	}
 
