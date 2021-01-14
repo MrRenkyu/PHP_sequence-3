@@ -24,9 +24,9 @@
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Login">
-                <a href="index.php?action=home" class="btn btn-not-connected"> Ne pas se connecter</a>
+                <a href="<?php echo base_url('index.php/HomeController/index');?>" class="btn btn-not-connected"> Ne pas se connecter</a>
             </div>
-            <p>Vous n'avez pas encore de compte? <a href="index.php?action=register">S'enregistrer maintenant</a>.</p>
+            <p>Vous n'avez pas encore de compte? <a href="<?php echo base_url('index.php/RegisterController/index');?>">S'enregistrer maintenant</a>.</p>
         </form>
     </div>    
 </body>
