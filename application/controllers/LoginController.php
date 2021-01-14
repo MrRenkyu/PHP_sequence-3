@@ -10,24 +10,19 @@ class LoginController extends CI_Controller {
     private $password_err = "";
     
     public function index(){
-        
+                
+        $this->load->helper('url');
         session_start();
 
         // Check if the user is already logged in, if yes then redirect him to home page
         if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
            $this->succesfullConnect_NextPage();
-           echo"CONNECTED!";
-            //exit;
         }
         
-
         $this->checkAsPost();
-        
-        $this->load->helper('url');
-
         $this->load->model('loginDbChecker');
        
-        if(!empty($username) && !empty($password)){
+        if(!empty($this->username) && !empty($this->password)){
             if( $this->loginDbChecker->authentificate($this->username,$this->password)){
                 $this->succesfullConnect_NextPage();
             }else{
@@ -57,11 +52,12 @@ class LoginController extends CI_Controller {
             } else{
                 $this->password = trim($_POST["password"]);
             }  
-        }      
+        }
+        
     }
 
-    private function succesfullConnect_NextPage(){                         
-       // header(base_url('index.php/HomeController/index'));
+    private function succesfullConnect_NextPage(){       
+        header('Location: '.base_url('index.php/HomeController/index'));
     }
 
 }

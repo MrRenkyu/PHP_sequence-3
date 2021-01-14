@@ -47,7 +47,7 @@
 
       <div class="item Gauche">
         <p>
-            <a <?php echo 'href="index.php?action=home"' ?>>Retour à la page d'accueil</a>
+            <a href="<?php echo base_url('index.php/HomeController/index');?>" >Retour à la page d'accueil</a>
         </p>
       </div>
       <div class="item GaucheBas">

@@ -27,6 +27,17 @@ class Articles_db_manager extends CI_Model{
         return $listArticle;
     }
 
+    function GetPublicArticle(){
+        $query = $this->db->query("SELECT * FROM ARTICLE WHERE public = 1");      
+        $listArticle;
+        foreach ($query->result('array') as $line) {
+            $article = new Article($line['public'],$line['author'],$line['title'],$line['date'],
+            $line['summary'],$line['data'],$line['id'],true);
+            $listArticle[] = $article;
+        }
+        return $listArticle;
+    }
+
     function InsertArticle($article){
         $this->db->query("INSERT INTO ARTICLE VALUES('".$article->getId()."', '".$article->isPublic()."', '".base64_encode($article->getAuthor())."', '".base64_encode($article->getTitle())."', '".$article->getPublicationDate()."', '".base64_encode($article->getSummary())."', '".base64_encode($article->getContent())."')"); 
     }
