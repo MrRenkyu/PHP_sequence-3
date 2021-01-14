@@ -7,16 +7,20 @@
     <style type="text/css">
         body{ font: 14px sans-serif; text-align: center; }
     </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
     <script>
        function SelectArticle(idArticle){
+         /*
             jQuery.ajax({
-              url: "model/home.php",
+              url: "<?php echo base_url('index.php/ReaderController/index');?>",
               type: "POST",
               data: ({id: idArticle}),
             success: function(data){
-              window.location.href='index.php/ReaderController/index';
+             // window.location.href='index.php/ReaderController/index';
             }
             });
+            */
+            window.location.href='<?php echo base_url('index.php/ReaderController/index/');?>'+idArticle;
         }
     </script>
 </head>
