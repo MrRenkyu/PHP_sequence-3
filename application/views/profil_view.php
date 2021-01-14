@@ -28,7 +28,7 @@
             
             <label for="label-id">Ton id est le : <?php echo($profilId); ?> </label>
             
-            <form action="index.php?action=profil" method="post">
+            <form action="<?php echo base_url('index.php/ProfilController/updateData');?>" method="post">
 
                 <label for="name">Nom : </label><br>
                 <textarea name="profilNom" id="nom" maxlength="50" required><?php echo($profilNom);  ?></textarea><br>
@@ -43,6 +43,8 @@
 
                 <label for="name">Mot de passe : </label><br>
                 <textarea name="profilPswd" id="mdp" maxlength="50"></textarea><br>
+                <span class="help-block"><?php echo $password_err; ?></span>
+
 
                 <button class="saveBT"type="submit" name="insert" value="insert">Sauvegarder</button>
             </form>
