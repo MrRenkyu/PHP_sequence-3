@@ -9,14 +9,15 @@ class LoginDbChecker extends CI_Model{
        $this->load->database();
     }
 
+    //verify if account is OK to connect
+    //return true or false indeed
     public function authentificate($username,$password){
        
-        echo 'authentificate method: '.$username.'  '.$password;      
             // Prepare a select statement
             $query = $this->db->query("SELECT id, username, password FROM USER WHERE username = '$username'");
             foreach ($query->result() as $line) {
                 $hashed_password = $line->password;
-                if(password_verify($password, $hashed_password)){
+                if(password_verify($password, $hashed_password)){ //password is hashed on Table, so verify with function
                     // Password is correct, so start a new session
                     
                     // Store data in session variables

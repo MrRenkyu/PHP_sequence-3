@@ -1,5 +1,5 @@
 <?php
-require_once("Article.class.php");
+require_once("Article.class.php"); //needed to instanciate Article
 
 class Articles_db_manager extends CI_Model{
 
@@ -8,25 +8,28 @@ class Articles_db_manager extends CI_Model{
         $this->load->database();
     }
 
+    //return the articles with this id
     function GetArticleById($id){
         $query = $this->db->query("SELECT * FROM ARTICLE WHERE id = " . $id);
         foreach ($query->result('array') as $line) {
             $articleSelected = new Article($line['public'],$line['author'],$line['title'],$line['date'],$line['summary'],$line['data'], $line['id'],true );
-            return $articleSelected; 
+            return $articleSelected; //id is unique so only one can exist
         }
     }
 
+
     function GetAllArticle(){
         $query = $this->db->query("SELECT * FROM ARTICLE");      
-        $listArticle;
-        foreach ($query->result('array') as $line) {
-            $article = new Article($line['public'],$line['author'],$line['title'],$line['date'],
+        foreach ($query->result('array') as $line) { //for each row 
+            // create an Article with row data
+            $article = new Article($line['public'],$line['author'],$line['title'],$line['date'], 
             $line['summary'],$line['data'],$line['id'],true);
-            $listArticle[] = $article;
+            $listArticle[] = $article; //add it to list 
         }
         return $listArticle;
     }
 
+    //same of GetAllArticle(), but only with Public article 
     function GetPublicArticle(){
         $query = $this->db->query("SELECT * FROM ARTICLE WHERE public = 1");      
         $listArticle;
@@ -59,6 +62,7 @@ class Articles_db_manager extends CI_Model{
         $this->db->query("DELETE FROM ARTICLE WHERE id = " .$id); 
     }
 
+    //find next id, from table 
     function GetNewIdForArticle(){
         $query = $this->db->query("SELECT MAX(id) as nbr FROM ARTICLE"); 
         foreach ($query->result('array') as $line) {

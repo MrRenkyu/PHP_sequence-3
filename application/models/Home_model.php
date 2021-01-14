@@ -13,22 +13,24 @@ class home_model extends CI_Model{
         $this->load->model('articles_db_manager');
         $this->load->helper('url');
  
-		$this->listArticle = $this->articles_db_manager->GetPublicArticle();	
+		$this->listArticle = $this->articles_db_manager->GetPublicArticle(); //get all public Articles	
 		
      }
 
+     //Create HTMLString Button
     public function GetShowButtonString(){
     	$str = "";
-        if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true){
+        if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true){//if logged allow to adminPage and profilPage
         	$str .= '<a href="'.base_url("index.php/AdminController/index").'" class="button">Administrateur</a>';
             $str .= '<a href="'.base_url("index.php/LogoutController/index").'" class="button">Se deconnecter</a>';
             $str .= '<a href="'.base_url("index.php/ProfilController/index").'" class="button">Mon profil</a>';
-        }else{
-            $str .= '<a href="'.base_url("index.php/LogoutController/index").'" class="button">Se connecter</a>';
+        }else{//if not, just allow to logging
+            $str .= '<a href="'.base_url("index.php/LoginController/index").'" class="button">Se connecter</a>';
         }
         return $str;
     }
 
+    //Create HTMLString Menu, Menu is button that display article data to Reader
    public function GetCreateMenuString(){
    	    $str = "";         
         foreach($this->listArticle as $article){
@@ -38,6 +40,7 @@ class home_model extends CI_Model{
         return $str;
     }
 
+    //Create HTMLString basic info of id article
    public function GetShowArticleString($index){
    	    $str = "";         
         if(count($this->listArticle) >= $index){

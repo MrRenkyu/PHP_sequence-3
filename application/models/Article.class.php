@@ -1,6 +1,6 @@
 <?php
 
-class Article {
+class Article { //object that strore and manipulate data of  articles.
     
     protected $title;
     protected $isPublic;

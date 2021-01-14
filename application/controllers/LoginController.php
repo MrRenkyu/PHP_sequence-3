@@ -3,12 +3,12 @@
 class LoginController extends CI_Controller {
 
     // Define variables and initialize with empty values
-
     private $username = "";
     private $password = "";
     private $username_err ="";
     private $password_err = "";
     
+    //index is called bu default 
     public function index(){
                 
         $this->load->helper('url');
@@ -18,23 +18,33 @@ class LoginController extends CI_Controller {
         if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
            $this->succesfullConnect_NextPage();
         }
-        
+
+         //Loginview call LoginController with POST when user submit
+         //so we catch them;
         $this->checkAsPost();
         $this->load->model('loginDbChecker');
        
+        //if they are not empty that mean user has correcly set value from form
         if(!empty($this->username) && !empty($this->password)){
-            if( $this->loginDbChecker->authentificate($this->username,$this->password)){
-                $this->succesfullConnect_NextPage();
+            if( $this->loginDbChecker->authentificate($this->username,$this->password)){ //verify if account exist
+                $this->succesfullConnect_NextPage(); // if  yes redirect to homepage.
             }else{
-                $this->username_err = $this->loginDbChecker->getNewUsername_err();
+                $this->username_err = $this->loginDbChecker->getNewUsername_err(); //ask Model to tell correct error, they are generate by authentificate()
                 $this->password_err = $this->loginDbChecker->getNewPassword_err();
             }
         }
 
-        $data = array('username' => $this->username, 'username_err' => $this->username_err,'password_err' => $this->password_err,'password' => $this->password);
+        //store data to view
+        $data = array(
+            'username' => $this->username,
+            'username_err' => $this->username_err,
+            'password_err' => $this->password_err,
+            'password' => $this->password
+        );
         $this->load->view('login_view',$data);
     }
 
+    //verify if there is POST, then set error if needed
     private function checkAsPost(){
         // Processing form data when form is submitted
         if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -56,6 +66,7 @@ class LoginController extends CI_Controller {
         
     }
 
+    
     private function succesfullConnect_NextPage(){       
         header('Location: '.base_url('index.php/HomeController/index'));
     }

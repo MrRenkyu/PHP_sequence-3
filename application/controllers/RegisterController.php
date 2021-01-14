@@ -11,21 +11,21 @@ class RegisterController extends CI_Controller{
 	private $password_err = "";
 	private $confirm_password_err = "";
 
+	// index is called by default, so any special thing is did
 	public function index(){
-		// Processing form data when form is submitted
 		$this->load->helper('url');
 		$data = array('username' => $this->username, 'username_err' => $this->username_err,'password_err' => $this->password_err,'password' => $this->password, 'confirm_password' => $this->confirm_password, 'confirm_password_err' => $this->confirm_password_err);
 		$this->load->view('register_view', $data);
-
 	}
 
 
+	// this method is call by view with POST
 	public function insertAccount(){
 
 		//chek if there is POST méthod
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			$hasErr = false;
-			$this->load->model('register_Manager');
+			$this->load->model('register_Manager'); // verify data from DB
 
 			if(!isset($_POST["username"]) || empty(trim($_POST["username"]))){//chek if there is POST with username
 				$this->username_err = "le nom d'utilisateur est vide"; //if empty set error msg
@@ -75,7 +75,7 @@ class RegisterController extends CI_Controller{
 
 	}
 
-
+	// reload actual page 
 	private function reloadPage(){
 		$this->load->helper('url');
 		//parameter array to set correctly view data

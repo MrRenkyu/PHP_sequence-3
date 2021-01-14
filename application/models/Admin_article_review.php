@@ -4,15 +4,11 @@ class Admin_article_review extends CI_Model{
 
 	
 
-    private $listArticle = [];
-	private $articleSelected;
-	
+    private $listArticle = [];	
 
 	public function __construct(){
-		$this->load->database();
-		$this->load->model('articles_db_manager');
- 
-		$this->listArticle = $this->articles_db_manager->GetAllArticle();
+		$this->load->model('articles_db_manager'); //other model that interact with DB
+		$this->listArticle = $this->articles_db_manager->GetAllArticle(); // get All Articles from table ARTICLE
 		
      }
    
@@ -44,9 +40,12 @@ class Admin_article_review extends CI_Model{
 		return false;
 	}
 	
+	//get an article by is id
 	private function getArticleById($id){
 		return $this->articles_db_manager->GetArticleById($id);
 	}
+
+	//store data of article as array to direcly call view
 	function dataArrayPackageArticle($id){
 		$article = $this->getArticleById($id);
 		$data = array(

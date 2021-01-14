@@ -1,7 +1,8 @@
 <?php
 
 class LogoutController extends CI_Controller{
-
+    // this Controller do not call view, he it used to clean session and disconnect user.
+    
     function index(){
         // Initialize the session
         session_start();
