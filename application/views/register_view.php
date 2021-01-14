@@ -35,7 +35,7 @@
                 <input type="reset" class="btn btn-default" value="Reset">
                 
             </div>
-            <p>Vous avez dêja un compte ? <a href="index.php?action=login">Se connecter</a>.</p>
+            <p>Vous avez dêja un compte ? <a href="<?php echo base_url('index.php/LoginController/index');?>">Se connecter</a>.</p>
         </form>
     </div>    
 </body>
