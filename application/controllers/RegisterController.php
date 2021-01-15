@@ -86,7 +86,8 @@ class RegisterController extends CI_Controller{
 
 	private function exitToLogin(){
 		$this->load->helper('url');
-		header(base_url('index.php/LoginPage/index'));
+		header('Location: '.base_url('index.php/LoginController/index'));
+
 	}
 
 
