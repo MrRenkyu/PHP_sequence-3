@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Mon profil</title>
-    <link rel="stylesheet" href="../assets/css/profil.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/profil.css');?>">
 </head>
 
 <body>
     <div class="container">
 
         <div class="item Entete">
-
-			<a href="index.php?action=home"><img class="homeImg" src="../assets/img/home.png"/></a>
+            <a href="<?php echo base_url('index.php/HomeController/index');?>"><img class="homeImg" src="<?php echo base_url('/assets/img/home.png');?>"/></a>
             <h1> Mon profil </h1>
         </div>
 

@@ -17,7 +17,7 @@ class Redactor
         $this->nom = $Nom;
         $this->prenom = $Prenom;
         $this->id = $Id;
-		$this->dateDeNaissance = $Birthdate;
+		$this->dateDeNaissance = $DateDeNaissance;
 		$this->login = $UserName;
     }
     

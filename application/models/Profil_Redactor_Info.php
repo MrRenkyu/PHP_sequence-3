@@ -14,7 +14,7 @@ class Profil_Redactor_Info extends CI_Model{
         $query = $this->db->query($sql);
 
         foreach($query->result() as $line){
-            $userInfo = new Redactor($line->surname,$line->name,$line->birthdate,$line->username,$line->id );
+            $this->userInfo = new Redactor($line->surname,$line->name,$line->birthdate,$line->username,$line->id );
         }
     }
 
